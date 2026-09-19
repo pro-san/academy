@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -38,6 +38,7 @@ import { useTheme } from './hooks/useTheme';
 import { useMetaManager } from './hooks/useMetaManager';
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import { portfolio } from './data/portfolio.js';
+import { getCanonicalTechForSkill } from './utils/techFilter';
 
 const SECTION_IDS = [
   'home',
@@ -64,6 +65,25 @@ export default function App() {
   const [selectedLessonId, setSelectedLessonId] = useState<string | undefined>();
   const [selectedPlan, setSelectedPlan] = useState<{ name: string; price: string } | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Shared interactive technology stack filter across Skills and Projects
+  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+
+  const handleToggleTech = useCallback((tech: string) => {
+    const canonical = getCanonicalTechForSkill(tech);
+    setSelectedTechs((prev) => {
+      const isPresent = prev.some((t) => t.toLowerCase() === canonical.toLowerCase());
+      if (isPresent) {
+        return prev.filter((t) => t.toLowerCase() !== canonical.toLowerCase());
+      } else {
+        return [...prev, canonical];
+      }
+    });
+  }, []);
+
+  const handleClearTechFilters = useCallback(() => {
+    setSelectedTechs([]);
+  }, []);
 
   // Global keyboard shortcut listener for ⌘K, Ctrl+K, and '/'
   useEffect(() => {
@@ -199,7 +219,14 @@ export default function App() {
         <SectionDivider icon={Code2} label="Stack" />
 
         {/* 3. Skills Section */}
-        <Skills skills={portfolio.skills as any} projects={portfolio.projects as any} />
+        <Skills
+          skills={portfolio.skills as any}
+          projects={portfolio.projects as any}
+          selectedTechs={selectedTechs}
+          onToggleTech={handleToggleTech}
+          onClearTechFilters={handleClearTechFilters}
+          onScrollToProjects={() => handleNavigateSection('projects')}
+        />
 
         <SectionDivider icon={Layers} label="Offerings" />
 
@@ -213,11 +240,14 @@ export default function App() {
 
         <SectionDivider icon={FolderGit2} label="Work" />
 
-        {/* 5. Projects Section with Active Project Tracking */}
+        {/* 5. Projects Section with Active Project Tracking & Cross-Filtering */}
         <Projects
           projects={portfolio.projects as ProjectItem[]}
           selectedProject={activeProject}
           onSelectProject={setActiveProject}
+          selectedTechs={selectedTechs}
+          onToggleTech={handleToggleTech}
+          onClearTechFilters={handleClearTechFilters}
         />
 
         <SectionDivider icon={BookOpen} label="Articles" />

@@ -15,8 +15,11 @@ import {
   ExternalLink,
   Code2,
   Share2,
+  FolderGit2,
+  Check,
 } from 'lucide-react';
 import { ProjectItem } from './Projects';
+import { getCanonicalTechForSkill, isTechActive } from '../utils/techFilter';
 
 export interface SkillItem {
   name: string;
@@ -31,6 +34,8 @@ interface SkillsForceGraphProps {
   skills: SkillItem[];
   projects?: ProjectItem[];
   onSelectSkill?: (skillName: string) => void;
+  selectedTechs?: string[];
+  onToggleTech?: (tech: string) => void;
   className?: string;
 }
 
@@ -80,6 +85,8 @@ export default function SkillsForceGraph({
   skills,
   projects = [],
   onSelectSkill,
+  selectedTechs = [],
+  onToggleTech,
   className = '',
 }: SkillsForceGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -878,11 +885,34 @@ export default function SkillsForceGraph({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {selectedNode.projects && selectedNode.projects.length > 0 && (
               <span className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-200 dark:border-indigo-800">
                 {selectedNode.projects.length} Linked Deliverables
               </span>
+            )}
+            {onToggleTech && selectedNode.type === 'tech' && (
+              <button
+                type="button"
+                onClick={() => onToggleTech(getCanonicalTechForSkill(selectedNode.label))}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-all cursor-pointer ${
+                  isTechActive(getCanonicalTechForSkill(selectedNode.label), selectedTechs)
+                    ? 'bg-indigo-600 text-white shadow-xs hover:bg-indigo-700'
+                    : 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-950'
+                }`}
+              >
+                {isTechActive(getCanonicalTechForSkill(selectedNode.label), selectedTechs) ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Filtering Projects</span>
+                  </>
+                ) : (
+                  <>
+                    <FolderGit2 className="w-3.5 h-3.5" />
+                    <span>Filter Projects</span>
+                  </>
+                )}
+              </button>
             )}
             <button
               type="button"

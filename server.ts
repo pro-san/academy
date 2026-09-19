@@ -146,6 +146,12 @@ app.post('/api/chat', async (req: Request, res: Response) => {
   }
 });
 
+// Explicit route for static RSS feed XML to ensure accurate MIME type
+app.get('/rss.xml', (req: Request, res: Response) => {
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.sendFile(path.join(process.cwd(), 'public', 'rss.xml'));
+});
+
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({

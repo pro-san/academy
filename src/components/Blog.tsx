@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, UIEvent } from 'react';
+import { useState, useEffect, useMemo, useRef, UIEvent } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import {
   BookOpen,
@@ -14,7 +14,8 @@ import {
   Check,
   ChevronRight,
   Layers,
-  Code2
+  Code2,
+  Rss
 } from 'lucide-react';
 import { BlogPost, sampleBlogPosts } from '../data/blogData';
 import ReadingTimeIndicator from './ReadingTimeIndicator';
@@ -29,6 +30,24 @@ export default function Blog() {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [modalScrollProgress, setModalScrollProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  // Synchronize hash with open blog post modal (supports direct RSS item links e.g. #blog-slug)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#blog-')) {
+        const slug = hash.replace('#blog-', '');
+        const match = sampleBlogPosts.find((p) => p.slug === slug);
+        if (match) {
+          setSelectedPost(match);
+        }
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const categories = [
     'All',
@@ -98,9 +117,22 @@ export default function Blog() {
             Articles &amp; Blog Posts
           </h2>
           <div className="w-12 h-1 bg-indigo-600 dark:bg-indigo-500 rounded-full mt-3 mb-4" />
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mb-4">
             In-depth engineering write-ups, architecture breakdowns, AI agent patterns, and performance optimization guides.
           </p>
+          <div className="flex items-center gap-2">
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="alternate"
+              type="application/rss+xml"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-medium text-amber-800 dark:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-all shadow-xs group"
+              title="Subscribe to RSS Feed (Articles &amp; Project Releases)"
+            >
+              <Rss className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform" />
+              <span>Subscribe via RSS</span>
+            </a>
+          </div>
         </div>
 
         {/* Filter and Search Bar */}

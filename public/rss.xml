@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" 
+     xmlns:atom="http://www.w3.org/2005/Atom" 
+     xmlns:dc="http://purl.org/dc/elements/1.1/" 
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mr. KIM SAN | PRO DIGITAL — Engineering Blog &amp; Project Updates</title>
+    <link>https://kimsan.dev/</link>
+    <description>Technical articles, full-stack architecture insights, AI agent engineering, and project releases by Mr. KIM SAN (PRO DIGITAL).</description>
+    <language>en-us</language>
+    <copyright>Copyright 2026 PRO DIGITAL &bull; Mr. KIM SAN. All rights reserved.</copyright>
+    <lastBuildDate>Sat, 19 Sep 2026 03:47:00 GMT</lastBuildDate>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <generator>PRO DIGITAL RSS Engine</generator>
+    <managingEditor>pro.digital.dev@gmail.com (Mr. KIM SAN)</managingEditor>
+    <webMaster>pro.digital.dev@gmail.com (Mr. KIM SAN)</webMaster>
+    <atom:link href="https://kimsan.dev/rss.xml" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://kimsan.dev/favicon.svg</url>
+      <title>Mr. KIM SAN | PRO DIGITAL</title>
+      <link>https://kimsan.dev/</link>
+      <width>64</width>
+      <height>64</height>
+    </image>
+
+    <!-- Blog Post 1 -->
+    <item>
+      <title><![CDATA[Architecting Autonomous AI Agents with Gemini Models & React 18]]></title>
+      <link>https://kimsan.dev/#blog-autonomous-ai-agents-gemini-react</link>
+      <guid isPermaLink="true">https://kimsan.dev/#blog-autonomous-ai-agents-gemini-react</guid>
+      <pubDate>Thu, 12 Sep 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[AI & Full Stack]]></category>
+      <category><![CDATA[Gemini AI]]></category>
+      <category><![CDATA[React 18]]></category>
+      <category><![CDATA[Streaming]]></category>
+      <category><![CDATA[Agentic Workflows]]></category>
+      <description><![CDATA[A practical guide to building responsive server-sent streaming interfaces, robust tool invocation loops, and low-latency LLM agent pipelines in production applications.]]></description>
+      <content:encoded><![CDATA[
+        <p>Modern web engineering is experiencing a profound paradigm shift: applications are transitioning from static request-response systems to proactive, autonomous agent ecosystems. Integrating Large Language Models (LLMs) like Google Gemini requires rethinking state synchronization, UI ergonomics, and error resilience.</p>
+        <h3>1. The Core Architecture of an AI Agent Loop</h3>
+        <p>An effective client-server AI agent pipeline consists of three symbiotic layers: Context Orchestrator, Decision Engine powered by Gemini 2.5/3.8 Flash, and Reactive Streaming via Server-Sent Events (SSE).</p>
+        <h3>2. Preventing Hallucinations with Grounded Tool Schemas</h3>
+        <p>By defining rigid TypeScript interfaces mapped directly into OpenAPI function definitions, the Gemini model produces type-safe parameters validated on the server boundary.</p>
+        <h3>3. Streaming UI Ergonomics in React</h3>
+        <p>Rather than updating React state on every raw SSE packet, batch incoming tokens using requestAnimationFrame or a debounce queue.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Blog Post 2 -->
+    <item>
+      <title><![CDATA[Scaling Laravel APIs with Redis Queues & Multi-Container Docker]]></title>
+      <link>https://kimsan.dev/#blog-high-concurrency-laravel-docker-microservices</link>
+      <guid isPermaLink="true">https://kimsan.dev/#blog-high-concurrency-laravel-docker-microservices</guid>
+      <pubDate>Wed, 28 Aug 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Backend & DevOps]]></category>
+      <category><![CDATA[Laravel]]></category>
+      <category><![CDATA[Docker]]></category>
+      <category><![CDATA[Redis]]></category>
+      <category><![CDATA[Microservices]]></category>
+      <description><![CDATA[How to decouple compute-intensive operations, implement resilient background workers, and eliminate database bottlenecks for 5,000+ requests per second.]]></description>
+      <content:encoded><![CDATA[
+        <p>When scaling monolithic or modular Laravel applications to accommodate high-concurrency traffic bursts, naive synchronous controllers immediately collapse database connection pools. By shifting heavy workloads into isolated background workers, system responsiveness improves by orders of magnitude.</p>
+        <h3>Asynchronous Event Dispatching</h3>
+        <p>Using Laravel's unified Queue interface backed by Redis in-memory broker, we reduce initial HTTP endpoint latency from 3.8s down to under 45ms.</p>
+        <h3>Docker Orchestration for Elastic Scaling</h3>
+        <p>Separating the Nginx web server, PHP-FPM application container, Redis instance, and isolated queue worker containers into a streamlined Docker Compose environment.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 1 -->
+    <item>
+      <title><![CDATA[Project Release: CloudPulse AI SaaS Platform]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-cloudpulse-saas</guid>
+      <pubDate>Thu, 15 Aug 2024 10:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[Full Stack]]></category>
+      <category><![CDATA[Gemini AI]]></category>
+      <category><![CDATA[React]]></category>
+      <category><![CDATA[Laravel]]></category>
+      <description><![CDATA[Production launch of CloudPulse AI SaaS Platform: an enterprise multi-tenant cloud telemetry and microservices management platform powered by AI anomaly detection and real-time cluster monitoring.]]></description>
+      <content:encoded><![CDATA[
+        <p>CloudPulse AI SaaS Platform has been officially deployed. Built with React, Laravel, Gemini AI, MySQL, and Docker, CloudPulse provides real-time cluster telemetry, automated root-cause analysis, and predictive anomaly alerts.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Blog Post 3 -->
+    <item>
+      <title><![CDATA[Building Production Telegram Bots with Node.js & Webhook Security]]></title>
+      <link>https://kimsan.dev/#blog-telegram-bot-api-automation-nodejs</link>
+      <guid isPermaLink="true">https://kimsan.dev/#blog-telegram-bot-api-automation-nodejs</guid>
+      <pubDate>Mon, 15 Jul 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Automation & APIs]]></category>
+      <category><![CDATA[Telegram Bot]]></category>
+      <category><![CDATA[Node.js]]></category>
+      <category><![CDATA[Webhooks]]></category>
+      <description><![CDATA[Comprehensive architecture for event-driven Telegram bot microservices: webhook signature validation, distributed session storage, and conversational menus.]]></description>
+      <content:encoded><![CDATA[
+        <p>Telegram has evolved into one of the most powerful application platforms in the world. With over 900 million active users, Telegram bots can deliver mini-apps, automated trading telemetry, customer service ticketing, and internal devops orchestration.</p>
+        <h3>Polling vs. Webhooks in Production</h3>
+        <p>In production environments, webhooks protected by secret tokens (X-Telegram-Bot-Api-Secret-Token) and distributed Redis state machines are mandatory for high-throughput reliability.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 2 -->
+    <item>
+      <title><![CDATA[Project Release: DevFlow CI/CD Pipeline Visualizer]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-devflow-pipeline</guid>
+      <pubDate>Mon, 15 Jul 2024 08:30:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[Developer Tool]]></category>
+      <category><![CDATA[React]]></category>
+      <category><![CDATA[Docker]]></category>
+      <description><![CDATA[Released DevFlow: a high-performance developer dashboard displaying live build pipelines, automated unit test test-beds, container registries, and rollback triggers.]]></description>
+      <content:encoded><![CDATA[
+        <p>DevFlow provides software engineering teams with immediate visual feedback across their integration cycles, tracking build times, container deployment logs, and automated rollback points.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Blog Post 4 -->
+    <item>
+      <title><![CDATA[Optimizing SQL Queries & Indexing for 10x Throughput at Scale]]></title>
+      <link>https://kimsan.dev/#blog-postgresql-mysql-query-optimization-10x</link>
+      <guid isPermaLink="true">https://kimsan.dev/#blog-postgresql-mysql-query-optimization-10x</guid>
+      <pubDate>Wed, 05 Jun 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Database]]></category>
+      <category><![CDATA[PostgreSQL]]></category>
+      <category><![CDATA[MySQL]]></category>
+      <category><![CDATA[Database Indexing]]></category>
+      <category><![CDATA[Performance]]></category>
+      <description><![CDATA[Eliminate table scans, understand B-Tree composite index positioning, and debug query execution plans using EXPLAIN ANALYZE.]]></description>
+      <content:encoded><![CDATA[
+        <p>Database performance is almost never limited by disk speed or memory size—it is bottlenecked by improper index selection, Cartesian cross joins, and N+1 query patterns that force sequential disk reads across millions of records.</p>
+        <h3>Understanding B-Tree Composite Indexing</h3>
+        <p>Understanding the Leftmost Prefix Rule ensures that compound multi-column indexes properly accelerate complex search filters without superfluous single-column indexes.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 3 -->
+    <item>
+      <title><![CDATA[Project Release: ApexCraft E-Commerce Engine]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-apexcraft-store</guid>
+      <pubDate>Wed, 15 May 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[Laravel]]></category>
+      <category><![CDATA[E-Commerce]]></category>
+      <description><![CDATA[ApexCraft E-Commerce Engine: Modern modular storefront with high-throughput Laravel RESTful APIs, Stripe webhook reconciliation, and automated inventory queues.]]></description>
+      <content:encoded><![CDATA[
+        <p>ApexCraft introduces scalable transactional flows with zero duplicate charges, instant webhook verification, and automated background stock reconciliation.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 4 -->
+    <item>
+      <title><![CDATA[Project Release: CollabSync Real-Time Studio]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-collabsync-studio</guid>
+      <pubDate>Mon, 15 Apr 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[Real-time Web]]></category>
+      <category><![CDATA[WebRTC]]></category>
+      <description><![CDATA[Browser-based collaborative code workspace featuring WebRTC multi-peer state syncing, cursor tracking, and inline syntax analysis.]]></description>
+      <content:encoded><![CDATA[
+        <p>Built with React, Node.js, and Firebase, CollabSync allows distributed engineering pairs to edit code simultaneously with sub-10ms operational latency.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 5 -->
+    <item>
+      <title><![CDATA[Project Release: FinancePulse Asset Ledger]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-financepulse-ledger</guid>
+      <pubDate>Thu, 15 Feb 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[Finance]]></category>
+      <category><![CDATA[Data Visualization]]></category>
+      <description><![CDATA[Comprehensive personal finance and multi-currency portfolio management tool with automated dividend tracking, tax-lot calculations, and offline cache.]]></description>
+      <content:encoded><![CDATA[
+        <p>Features interactive balance projections, currency risk hedging matrices, and instant SQLite offline caching.</p>
+      ]]></content:encoded>
+    </item>
+
+    <!-- Project Update 6 -->
+    <item>
+      <title><![CDATA[Project Release: TaskDaemon AI Automation Suite]]></title>
+      <link>https://kimsan.dev/#projects</link>
+      <guid isPermaLink="true">https://kimsan.dev/#projects-taskdaemon-suite</guid>
+      <pubDate>Mon, 15 Jan 2024 09:00:00 GMT</pubDate>
+      <dc:creator><![CDATA[Mr. KIM SAN]]></dc:creator>
+      <author>pro.digital.dev@gmail.com (Mr. KIM SAN)</author>
+      <category><![CDATA[Project Release]]></category>
+      <category><![CDATA[AI Software]]></category>
+      <category><![CDATA[Automation]]></category>
+      <description><![CDATA[Cross-platform intelligent software worker combining LLM agents, automated document intelligence, PDF invoice entity extraction, and background database pipelines.]]></description>
+      <content:encoded><![CDATA[
+        <p>TaskDaemon leverages Gemini API and Python desktop workers to ingest, categorize, and reconcile complex unstructured corporate invoice archives automatically.</p>
+      ]]></content:encoded>
+    </item>
+  </channel>
+</rss>

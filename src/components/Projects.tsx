@@ -138,6 +138,11 @@ function TiltProjectCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
+  const isMatchingFilter = Boolean(
+    selectedTechs && selectedTechs.length > 0 && selectedTechs.some((t) => projectMatchesTech(project, t))
+  );
+  const activeMatchedTechs = (selectedTechs || []).filter((t) => projectMatchesTech(project, t));
+
   // Normalized mouse coordinates (-0.5 to 0.5)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -210,7 +215,11 @@ function TiltProjectCard({
               }
         }
         transition={{ duration: 0.3 }}
-        className="relative flex flex-col justify-between h-full rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-950/40 transition-shadow duration-300 group"
+        className={`relative flex flex-col justify-between h-full rounded-3xl bg-white dark:bg-slate-900 border overflow-hidden transition-all duration-300 group ${
+          isMatchingFilter
+            ? 'border-indigo-500 dark:border-indigo-400 ring-2 ring-indigo-500/80 shadow-xl shadow-indigo-500/15'
+            : 'border-slate-200 dark:border-slate-800 shadow-sm hover:border-indigo-500/50 dark:hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-950/40'
+        }`}
       >
         {/* Dynamic specular glare sheen that follows mouse cursor */}
         {!shouldReduceMotion && (
@@ -248,13 +257,18 @@ function TiltProjectCard({
               />
             </div>
 
-            {/* Highlight Pill if present */}
-            {project.highlight && (
+            {/* Active matching technology badge or Highlight Pill */}
+            {isMatchingFilter ? (
+              <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-600 text-white shadow-md border border-indigo-400/50">
+                <Sparkles className="w-3 h-3 text-indigo-200" />
+                <span>Matches {activeMatchedTechs.join(', ')}</span>
+              </div>
+            ) : project.highlight ? (
               <div className="absolute top-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-indigo-500/90 text-white shadow-xs">
                 <Sparkles className="w-3 h-3" />
                 <span>{project.highlight}</span>
               </div>
-            )}
+            ) : null}
 
             {/* Quick action buttons on hover */}
             <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -426,19 +440,27 @@ function TiltProjectCard({
   );
 }
 
-interface ProjectsProps {
+export interface ProjectsProps {
   projects: ProjectItem[];
   selectedProject?: ProjectItem | null;
   onSelectProject?: (project: ProjectItem | null) => void;
+  selectedTechs?: string[];
+  onToggleTech?: (tech: string) => void;
+  onClearTechFilters?: () => void;
 }
 
 export default function Projects({
   projects,
   selectedProject: externalSelectedProject,
   onSelectProject,
+  selectedTechs: externalSelectedTechs,
+  onToggleTech: externalOnToggleTech,
+  onClearTechFilters: externalOnClearTechFilters,
 }: ProjectsProps) {
-  // Technology stack toggle filtering state
-  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+  // Technology stack toggle filtering state (controlled with fallback to internal state)
+  const [internalSelectedTechs, setInternalSelectedTechs] = useState<string[]>([]);
+  const isControlledTech = externalSelectedTechs !== undefined;
+  const selectedTechs = isControlledTech ? externalSelectedTechs : internalSelectedTechs;
   const [matchMode, setMatchMode] = useState<'any' | 'all'>('any');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -569,18 +591,26 @@ export default function Projects({
   const handleToggleTech = (tech: string) => {
     const canonical =
       tech.toLowerCase().includes('gemini') || tech.toLowerCase() === 'ai' ? 'AI' : tech;
-    setSelectedTechs((prev) => {
-      const isPresent = prev.some((t) => t.toLowerCase() === canonical.toLowerCase());
-      if (isPresent) {
-        return prev.filter((t) => t.toLowerCase() !== canonical.toLowerCase());
-      } else {
-        return [...prev, canonical];
-      }
-    });
+    if (externalOnToggleTech) {
+      externalOnToggleTech(canonical);
+    } else {
+      setInternalSelectedTechs((prev) => {
+        const isPresent = prev.some((t) => t.toLowerCase() === canonical.toLowerCase());
+        if (isPresent) {
+          return prev.filter((t) => t.toLowerCase() !== canonical.toLowerCase());
+        } else {
+          return [...prev, canonical];
+        }
+      });
+    }
   };
 
   const handleClearTechFilters = () => {
-    setSelectedTechs([]);
+    if (externalOnClearTechFilters) {
+      externalOnClearTechFilters();
+    } else {
+      setInternalSelectedTechs([]);
+    }
   };
 
   const categories = ['All', 'Full Stack', 'React', 'Laravel', 'Software', 'Web'];
@@ -901,7 +931,7 @@ export default function Projects({
               <button
                 type="button"
                 onClick={() => {
-                  setSelectedTechs([]);
+                  handleClearTechFilters();
                   setActiveCategory('All');
                   setSearchQuery('');
                 }}
